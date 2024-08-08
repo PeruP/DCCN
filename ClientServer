@@ -1,0 +1,88 @@
+Client.java
+
+import java.io.*;
+import java.net.*;
+public class Client {
+private Socket socket;
+private BufferedReader input;
+private DataOutputStream output;
+public Client(String address,int port) {
+try {
+socket = new Socket(address,port);
+System.out.println("Connection Successful");
+input = new BufferedReader(new InputStreamReader(System.in));
+output = new DataOutputStream(socket.getOutputStream());
+String line="";
+while(!line.equals("Over")) {
+line=input.readLine();
+output.writeUTF(line);
+}
+input.close(); 
+output.close();
+socket.close();
+}
+catch(Exception e) {
+}
+}
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+new Client("127.0.0.1",5000);
+}
+}
+
+Server.java
+
+import java.io.*;
+import java.net.*;
+public class Server {
+private Socket socket;
+private ServerSocket server;
+private DataInputStream input;
+public Server(int port) {
+try {
+server = new ServerSocket(port);
+System.out.println("Server Started");
+System.out.println("Waiting for client .....");
+socket = server.accept();
+System.out.println("Client accecpted");
+input = new DataInputStream(new
+BufferedInputStream(socket.getInputStream()));
+String line = "";
+ while (!line.equals("Over")) {
+ line = input.readUTF();
+ System.out.println(line);
+ }
+ System.out.println("Closing connection"); 
+ socket.close();
+ input.close();
+}
+catch(Exception e) {
+}
+}
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+new Server(5000);
+}
+}
+
+
+Note : Ensure that the server is running before starting the client.
+
+Client Console : 
+
+Connection Successful
+Welcome
+To
+Pullareddy engineering clg
+Over
+
+Server Console :
+
+Server Started
+Waiting for client .....
+Client accecpted
+Welcome
+To
+Pullareddy engineering clg
+Over
+Closing connection

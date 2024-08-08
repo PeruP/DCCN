@@ -1,0 +1,75 @@
+import java.util.*;
+public class Parity
+{
+    public static int findParity(int[] d,int n){
+        int c=0,i;
+        for(i=0;i<n;i++){
+            if(d[i]==1)
+            c++;
+        }
+        return c;
+    }
+    public static int evenOdd(String p,int c){
+        if(p.equals("even")){
+            if(c%2==0)
+            return 1;
+            else
+            return 0;
+        }
+        else{
+            if(c%2==0)
+            return 0;
+            else
+            return 1;
+        }
+    }
+public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        System.out.print("Enter the no of bits : ");
+        int n=sc.nextInt(),c=0,i,d[]=new int[n],code[]=new int[n+1],r[]=new int[n+1];
+        String p;
+        System.out.print("Enter the "+n+" data bits : ");
+        for(i=0;i<n;i++){
+            d[i]=sc.nextInt();
+            code[i]=d[i];
+        }
+        System.out.println("Enter if it is odd parity or even parity : ");
+        p=sc.next();
+        c=findParity(d,n);
+        if(evenOdd(p,c)==1)
+            code[n]=0;
+        else
+            code[n]=1;
+        System.out.print("The codeword to be sent is : ");
+        for(i=0;i<n+1;i++)
+        System.out.print(code[i]+" ");
+        System.out.println();
+        System.out.println("Enter the recieved codeword : ");
+        for(i=0;i<n+1;i++){
+            r[i]=sc.nextInt();
+        }
+        c=findParity(r,n+1);
+        if(evenOdd(p,c)==1){
+            System.out.println("Recieved codeword is correct.\nThe data word is : ");
+            for(i=0;i<n;i++)
+            System.out.print(r[i]+" ");
+            System.out.println();
+        }
+        else{
+            System.out.println("Received codeword is wrong");
+        }
+}
+}
+
+
+OUTPUT:
+Enter the no of bits : 5
+Enter the 5 data bits : 1 0 0 1 1
+Enter if it is odd parity or even parity :
+even
+The codeword to be sent is : 1 0 0 1 1 1
+Enter the received codeword :
+1 0 0 1 1 1
+Received codeword is correct.
+The data word is :
+1 0 0 1 1
